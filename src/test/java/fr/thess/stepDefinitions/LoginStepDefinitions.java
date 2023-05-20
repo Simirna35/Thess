@@ -1,36 +1,49 @@
 package fr.thess.stepDefinitions;
 
+import com.sun.jna.WString;
 import fr.thess.pages.BasePage;
+import fr.thess.pages.LoginPage;
 import fr.thess.utilities.BrowserUtils;
 import fr.thess.utilities.Driver;
 import fr.thess.utilities.Pages;
-import io.cucumber.java.fr.Alors;
-import io.cucumber.java.fr.Lorsque;
-import io.cucumber.java.fr.Sachantque;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 
-public class LoginStepDefinitions extends BaseStepDefinitions{
+import static org.junit.Assert.assertTrue;
+
+
+public class LoginStepDefinitions extends BaseStepDefinitions {
+
+    private static final Logger LOG = LogManager.getLogger(LoginStepDefinitions.class);
+
     public LoginStepDefinitions(BrowserUtils browserUtils, Driver driver, Pages pages) {
         super(browserUtils, driver, pages);
     }
 
-    @Sachantque("PS est dans la page de connexion")
-    public void ps_est_dans_la_page_de_connexion() {
-       getPages().loginPage().navigateToLogin();
+    @Given("Accéder à la page de connexion")
+    public void navigateToDashboard() {
+        getPages().loginPage().navigateToLogin();
 
     }
 
-    @Lorsque("Saisir des identifiants valides {string} et {string}")
-    public void saisir_des_identifiants_valides_et(String identifiant, String password) {
-        getPages().loginPage().loginToAppWithValid();
-
-    }
-
-    @Alors("Vérifiez que le tableau de board s'affiche")
-    public void vérifiez_que_le_tableau_de_board_s_affiche() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
+    @When("Saisir des identifiants valides {string} et {string}")
+    public void enterValidCredentials(String username, String password) {
+        getPages().loginPage().loginToAppWithValid(username, password);
 
 
     }
 
+    @Then("Vérifier que le system est redirigé vers la page tableau de bord {string}")
+    public void VerifyUrl(String url) {
+        boolean isUrlContains = getPages().loginPage().verifyDashboardUrl(url);
+
+        assertTrue("Verification is failed! Current Url doesn't contain expected extension", isUrlContains);
+        LOG.info("System is directed to the dashboard.");
+    }
+
+
+}

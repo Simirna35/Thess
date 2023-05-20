@@ -8,17 +8,17 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage {
     private static final Logger LOG = LogManager.getLogger(LoginPage.class);
 
     @FindBy(id = "login")
-    public WebElement chmp_Login;
+    public WebElement usernameElement;
 
     @FindBy(className = "transparent")
-    public WebElement chmp_MotdePasse;
+    public WebElement passwordElement;
 
-    @FindBy(xpath = "//*[@class='button width-100-pc']")
-    public WebElement btn_seConnecter;
+    //@FindBy(xpath = "//*[@class='button width-100-pc']")
+    //public WebElement btn_seConnecter;
 
     public LoginPage(BrowserUtils browserUtils, Driver driver, ConfigurationReader configurationReader) {
         super(browserUtils, driver, configurationReader);
@@ -27,28 +27,42 @@ public class LoginPage extends BasePage{
     public void navigateToLogin() {
         String url = getConfigurationReader().getProperty("url");
         getDriver().get().get(url);
+        getBrowserUtils().waitFor(1);
         LOG.info("Url utilisé afin de connecter application:{}", url);
+    }
+
+    public void loginToAppWithValid(String username, String password) {
+        login(username, password);
+        getBrowserUtils().waitFor(1);
+        LOG.info("Logged into application with credentials: {} | {}", username, password);
+    }
+
+    public void login(String username, String password) {
+        //click and send keys to username textbox// click and send keys to username
+        usernameElement.click();
+        usernameElement.sendKeys(username);
+
+        //click and send keys to password textboxchmp_MotdePasse.click();
+        passwordElement.click();
+        passwordElement.sendKeys(password);
 
     }
 
-    public void loginToAppWithValid() {
+    public boolean verifyDashboardUrl(String url) {
+        String currentUrl = getDriver().get().getCurrentUrl();
 
-        String identifiant = getConfigurationReader().getProperty("identifiant");
-        String password = getConfigurationReader().getProperty("password");
-        LOG.info("Logged into application with credentials: {} | {}",identifiant,password);
-
-
-
-
-    }
-    public void login (String identifiant, String password){
-        chmp_Login.click();
-        chmp_Login.sendKeys(identifiant);
-
-        chmp_MotdePasse.click();
-        chmp_MotdePasse.sendKeys(password);
-
+        return currentUrl.contains(url);
     }
 }
+
+    
+
+
+
+
+
+
+
+
 
 

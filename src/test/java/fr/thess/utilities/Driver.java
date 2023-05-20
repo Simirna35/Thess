@@ -22,7 +22,9 @@ import java.util.Map;
 
 public class Driver {
     private final ConfigurationReader configurationReader;
-    private final RemoteWebDriver remoteWebDriver;
+    private final RemoteWebDriver remoteWebDriver; // webdriver in parent class i
+    // selenium grid icin remote driver lazim
+    //
 
     public Driver(ConfigurationReader configurationReader) {
         this.configurationReader = configurationReader;
