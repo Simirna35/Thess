@@ -46,4 +46,11 @@ public class LoginStepDefinitions extends BaseStepDefinitions {
     }
 
 
-}
+    @When("Saisir des identifiants invalides {string} et {string}")
+    public void LoginWithInValidCredentials(String invalidUsername, String invalidPassword) {
+        getPages().loginPage().loginToWithInvalid(invalidUsername, invalidPassword);
+
+    }
+
+
+  }

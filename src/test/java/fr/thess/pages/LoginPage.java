@@ -5,6 +5,7 @@ import fr.thess.utilities.ConfigurationReader;
 import fr.thess.utilities.Driver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.checkerframework.checker.index.qual.PolyUpperBound;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -17,8 +18,12 @@ public class LoginPage extends BasePage {
     @FindBy(className = "transparent")
     public WebElement passwordElement;
 
+    @FindBy(id = "loginError")
+    public WebElement errorElement;
+
     //@FindBy(xpath = "//*[@class='button width-100-pc']")
     //public WebElement btn_seConnecter;
+
 
     public LoginPage(BrowserUtils browserUtils, Driver driver, ConfigurationReader configurationReader) {
         super(browserUtils, driver, configurationReader);
@@ -37,6 +42,13 @@ public class LoginPage extends BasePage {
         LOG.info("Logged into application with credentials: {} | {}", username, password);
     }
 
+
+    public void loginToWithInvalid(String username, String password) {
+        login(username, password);
+        getBrowserUtils().waitFor(1);
+        LOG.info("Logged into application with credentials: {} | {}", username, password);
+
+    }
     public void login(String username, String password) {
         //click and send keys to username textbox// click and send keys to username
         usernameElement.click();
@@ -53,6 +65,12 @@ public class LoginPage extends BasePage {
 
         return currentUrl.contains(url);
     }
+
+
+
+
+
+
 }
 
     

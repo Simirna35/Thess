@@ -6,7 +6,9 @@ import fr.thess.utilities.Driver;
 import fr.thess.utilities.Pages;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -55,14 +57,51 @@ public class BasePage {
 
     }
 
-//    public void vérifierTitle() {
-//        String url = getConfigurationReader().getProperty("urlDoctor");
-//        String currentUrl = getDriver().get().getCurrentUrl();
-//
-//        Assert.assertEquals(url,currentUrl);
-//
+    public void vérifierTitle() {
+        String url = getConfigurationReader().getProperty("urlDoctor");
+        String currentUrl = getDriver().get().getCurrentUrl();
 
+        Assert.assertEquals(url, currentUrl);
+    }
+
+
+    public boolean isMessageDisplayed(String message) {
+        String path = "//*[normalize-space(text())=\"" + message + "\"]";
+
+        return getDriver().get().findElement(By.xpath(path)).isDisplayed();
+    }
+
+    public boolean isErrorMessageDisplayed(String errorMessage) {
+
+        String path = "loginError";
+
+        WebElement errorElement;
+
+        try {
+            errorElement = getDriver().get().findElement(By.cssSelector(path));
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+        System.out.println("errorElement = " + errorElement.getText());
+        LOG.info("Located element to to get message: {}", path);
+
+        return errorElement.isDisplayed();
+
+
+        //return getDriver().get().findElement(By.xpath(path)).isDisplayed();
+
+    }
+
+    public String getErrorMessage() {
+        String path = "loginError";
+
+        WebElement messageElement = getDriver().get().findElement(By.id(path));
+
+        LOG.info("Located element to  get message: {}", path);
+        return messageElement.getText();
+    }
 }
+
 
 
 
