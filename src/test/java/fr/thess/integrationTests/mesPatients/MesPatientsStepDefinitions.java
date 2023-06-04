@@ -149,6 +149,7 @@ public class MesPatientsStepDefinitions extends BaseStepDefinitions {
     @And("Saisir le champs avec un {string} et cliquer le button {string}")
     public void saisirLeChampsAvecUnEtCliquerLeButton(String justification, String buttonValider) {
         getPages().mesPatientsPage().saisirJustification(justification);
+        jhkhk
 
     }
 }
