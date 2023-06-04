@@ -14,9 +14,9 @@ import org.junit.runner.RunWith;
 
         },
         features = "src/test/resources/features/",
-        glue = "fr/thess/stepDefinitions",
+        glue = "fr/thess/integrationTests",
         dryRun = false,
-        tags = "@negativeLogin"
+        tags = "@ajoutUnProtocole"
 )
 public class CukesRunner {
 }

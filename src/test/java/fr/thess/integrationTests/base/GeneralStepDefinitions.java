@@ -1,6 +1,6 @@
-package fr.thess.stepDefinitions;
+package fr.thess.integrationTests.base;
 
-import fr.thess.pages.LoginPage;
+import fr.thess.integrationTests.login.LoginPage;
 import fr.thess.utilities.BrowserUtils;
 import fr.thess.utilities.Driver;
 import fr.thess.utilities.Pages;
@@ -35,5 +35,14 @@ public class GeneralStepDefinitions extends BaseStepDefinitions {
         ;
         LOG.info("The message is displayed: {}", expectedErrorMessage);
     }
+
+    @When("Cliquer module {string}")
+    public void cliquerModule(String module) {
+        getPages().mesPatientsPage().clickToModule(module);
+
+    }
+
+
 }
+
 

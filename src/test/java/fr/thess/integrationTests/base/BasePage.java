@@ -1,4 +1,4 @@
-package fr.thess.pages;
+package fr.thess.integrationTests.base;
 
 import fr.thess.utilities.BrowserUtils;
 import fr.thess.utilities.ConfigurationReader;
@@ -57,42 +57,13 @@ public class BasePage {
 
     }
 
-    public void vérifierTitle() {
-        String url = getConfigurationReader().getProperty("urlDoctor");
-        String currentUrl = getDriver().get().getCurrentUrl();
-
-        Assert.assertEquals(url, currentUrl);
-    }
-
-
     public boolean isMessageDisplayed(String message) {
         String path = "//*[normalize-space(text())=\"" + message + "\"]";
 
         return getDriver().get().findElement(By.xpath(path)).isDisplayed();
     }
 
-    public boolean isErrorMessageDisplayed(String errorMessage) {
-
-        String path = "loginError";
-
-        WebElement errorElement;
-
-        try {
-            errorElement = getDriver().get().findElement(By.cssSelector(path));
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-        System.out.println("errorElement = " + errorElement.getText());
-        LOG.info("Located element to to get message: {}", path);
-
-        return errorElement.isDisplayed();
-
-
-        //return getDriver().get().findElement(By.xpath(path)).isDisplayed();
-
-    }
-
-    public String getErrorMessage() {
+     public String getErrorMessage() {
         String path = "loginError";
 
         WebElement messageElement = getDriver().get().findElement(By.id(path));
@@ -100,7 +71,44 @@ public class BasePage {
         LOG.info("Located element to  get message: {}", path);
         return messageElement.getText();
     }
+
+    public void clickToModule(String module) {
+        String path = "//*[normalize-space(text())=\"" + module + "\"]";
+        getBrowserUtils().waitFor(2);
+        WebElement moduleElement = getDriver().get().findElement(By.xpath(path));
+
+        moduleElement.click();
+        getBrowserUtils().waitFor(10);
+
+
+        LOG.info("Clicked to module: {}", module);
+
+
+        }
+    public void vérifierTitlePatients(){
+        String url = getConfigurationReader().getProperty("url");
+        String currentUrl = getDriver().get().getCurrentUrl();
+
+        Assert.assertEquals(url, currentUrl);
+
+    }
+    public void titlePatientForm() {
+        String url = getConfigurationReader().getProperty("urlPatientForm");
+        String currentUrl = getDriver().get().getCurrentUrl();
+
+        Assert.assertEquals(url, currentUrl);
+    }
+
+
+    public String getPagePath(String pageName) {
+        String path = "//h1[text()=\""+ pageName +"\"]";
+
+        return getDriver().get().findElement(By.xpath(path)).getText();
+
+
+    }
 }
+
 
 
 

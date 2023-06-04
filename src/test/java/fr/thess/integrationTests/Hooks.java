@@ -1,4 +1,4 @@
-package fr.thess.stepDefinitions;
+package fr.thess.integrationTests;
 
 import fr.thess.utilities.ConfigurationReader;
 import fr.thess.utilities.Driver;

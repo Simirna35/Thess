@@ -1,4 +1,4 @@
-package fr.thess.stepDefinitions;
+package fr.thess.integrationTests.base;
 
 import fr.thess.utilities.BrowserUtils;
 import fr.thess.utilities.Driver;
